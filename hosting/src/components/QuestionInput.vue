@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { createQuestion, getQuestions } from '@/services/databaseService';
-import { ref, onMounted } from 'vue';
+import { createQuestion } from '@/services/databaseService';
+import { ref } from 'vue';
 const text = ref('');
 
 async function send() {

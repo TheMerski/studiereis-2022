@@ -4,6 +4,7 @@ export class Question {
   public constructor(
     public id: string,
     public version: number,
+    public approved: boolean,
     public creation_time: Date,
     public question_eng: string,
     public correct_eng: string,
@@ -11,6 +12,7 @@ export class Question {
   ) {
     this.id = id;
     this.version = version;
+    this.approved = approved;
     this.creation_time = creation_time;
     this.question_eng = question_eng;
     this.correct_eng = correct_eng;
@@ -23,6 +25,7 @@ export const questionConvertor = {
     return {
       id: question.id,
       version: question.version,
+      approved: question.approved,
       creation_time: question.creation_time,
       question_eng: question.question_eng,
       correct_eng: question.correct_eng,
@@ -34,6 +37,7 @@ export const questionConvertor = {
     return new Question(
       data?.id,
       data?.version,
+      data?.approved,
       data?.creation_time,
       data?.question_eng,
       data?.correct_eng,

@@ -1,6 +1,17 @@
 import { initializeApp } from 'firebase/app';
 import * as firebaseConfig from '../../firebase-config.json';
-import { getFirestore, collection, getDocs, setDoc, doc, addDoc } from 'firebase/firestore/lite';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  addDoc,
+  query,
+  where,
+  limit,
+  orderBy,
+} from 'firebase/firestore/lite';
 import { Question, questionConvertor } from './question';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,10 +23,16 @@ const db = getFirestore(app);
 const latestQuestionVersion = 1;
 const questionCollectionName = 'questions';
 
-export async function getQuestions(): Promise<Question[]> {
+export async function getQuestions(approved = true, amount = 1): Promise<Question[]> {
   try {
     const questions = collection(db, questionCollectionName);
-    const questionsSnapshot = await getDocs(questions);
+    const q = query(
+      questions,
+      where('approved', '==', approved),
+      orderBy('creation_time'),
+      limit(amount)
+    );
+    const questionsSnapshot = await getDocs(q);
     const questionList = questionsSnapshot.docs.map((doc) => doc.data() as Question);
     return questionList;
   } catch (e) {
@@ -33,6 +50,7 @@ export async function createQuestion(
     const newQuestion = new Question(
       uuidv4(),
       latestQuestionVersion,
+      true,
       new Date(),
       question,
       correct,
