@@ -26,12 +26,17 @@ const questionCollectionName = 'questions';
 export async function getQuestions(approved = true, amount = 1): Promise<Question[]> {
   try {
     const questions = collection(db, questionCollectionName);
-    const q = query(questions, where('approved', '==', approved), limit(amount));
+    const q = query(
+      questions,
+      where('approved', '==', approved),
+      orderBy('creation_time', 'desc'),
+      limit(amount)
+    );
     const questionsSnapshot = await getDocs(q);
     const questionList = questionsSnapshot.docs.map((doc) => doc.data() as Question);
     return questionList;
   } catch (e) {
-    console.error(e);
+    console.dir(e);
     return [];
   }
 }
