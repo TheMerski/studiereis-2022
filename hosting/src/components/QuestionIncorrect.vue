@@ -21,7 +21,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="biggy">
-    Sorry, that's <span class="red">incorrect</span>.<br />
+    Sorry, that's <span class="red">incorrect</span>, you can retry in: {{ timeout }}<br />
   </div>
 </template>
 
