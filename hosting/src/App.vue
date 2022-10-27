@@ -153,7 +153,7 @@ footer .default-button {
 
 .light-blue-button:disabled {
   color: white;
-  background-color: rgb(166, 174, 190);
+  background-color: rgb(194, 195, 197);
 }
 
 @media (hover: hover) {
