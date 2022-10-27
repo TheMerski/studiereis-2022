@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { stringToBool } from '@/helpers';
 import { getQuestions } from '@/services/databaseService';
-import { onBeforeUnmount, ref } from 'vue';
+import { serialHandler } from '@/services/serialHandler';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const vragen = await getQuestions();
 const reloadInterval = 10 * 1000;
@@ -25,10 +26,30 @@ const interval = setInterval(async function () {
   console.log('Reloaded questions');
 }, reloadInterval);
 
+async function handleSerial() {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    try {
+      const text = await serialHandler.read();
+      if (text === 'l') {
+        correct(randomBool.value);
+      } else if (text === 'r') {
+        correct(!randomBool.value);
+      }
+    } catch (err) {
+      // Do nothing
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+}
+
+onMounted(() => {
+  handleSerial();
+});
+
 onBeforeUnmount(() => {
   clearInterval(interval);
 });
-
 </script>
 
 <template>

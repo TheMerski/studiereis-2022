@@ -5,6 +5,7 @@ import QuestionDisplay from './components/QuestionDisplay.vue';
 import QuestionInput from './components/QuestionInput.vue';
 import QuestionCorrect from './components/QuestionCorrect.vue';
 import QuestionIncorrect from './components/QuestionIncorrect.vue';
+import { serialHandler } from './services/serialHandler';
 
 const routes: { [route: string]: any } = {
   '/': QuestionDisplay,
@@ -12,6 +13,31 @@ const routes: { [route: string]: any } = {
   '/correct': QuestionCorrect,
   '/incorrect': QuestionIncorrect,
 };
+
+const showConnect = ref(true);
+
+async function handleSerial() {
+  let errors = 0;
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    try {
+      await serialHandler.read();
+      showConnect.value = false;
+      errors = 0;
+    } catch (err) {
+      errors++;
+      if (errors > 10) {
+        showConnect.value = true;
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+}
+
+function connect() {
+  serialHandler.init();
+  handleSerial();
+}
 
 const currentPath = ref(window.location.hash);
 
@@ -29,6 +55,7 @@ loadScript('https://storage.googleapis.com/static.q42.nl/q42.js');
 <template>
   <header>
     <a href="#/">
+      <button v-if="showConnect" @click="connect">conn</button>
       <q42 width="125" height="125" />
     </a>
 

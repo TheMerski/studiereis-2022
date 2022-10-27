@@ -1,4 +1,5 @@
-<script setup lang="ts">
+<script setup lang="ts">import { serialHandler } from '@/services/serialHandler';
+
 
 async function newQuestion(leaveQuestion: boolean) {
   if (leaveQuestion) {
@@ -7,6 +8,24 @@ async function newQuestion(leaveQuestion: boolean) {
     window.location.href = '#/';
   }
 }
+
+async function handleSerial() {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    try {
+      const text = await serialHandler.read();
+      if (text === 'l') {
+        newQuestion(true);
+      } else if (text === 'r') {
+        newQuestion(false);
+      }
+    } catch (err) {
+      // Do nothing
+    }
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+}
+
 </script>
 
 <template>
