@@ -20,10 +20,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <p>You're anwser was incorrect, you can retry in: {{ timeout }}</p>
+  <div class="biggy">Sorry, that's <span class="red">incorrect</span>.<br /></div>
 </template>
 
 <style scoped>
+.red {
+  color: red;
+  font-weight: inherit;
+}
 h1 {
   font-weight: 500;
   font-size: 2.6rem;

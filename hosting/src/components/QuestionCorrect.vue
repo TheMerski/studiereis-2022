@@ -40,15 +40,26 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <p>
-    Correct!<br />
+  <div class="biggy">
+    <span class="green">Correct!</span><br />
     Do you want to leave a new question for the next one?<br />
-    <button @click="newQuestion(true)">Yes</button>
-    <button @click="newQuestion(false)">No</button>
-  </p>
+  </div>
+  <footer>
+    <button @click="newQuestion(true)" class="default-button">Yes</button>
+    <button @click="newQuestion(false)" class="other-button">No</button>
+  </footer>
 </template>
 
 <style scoped>
+footer .other-button {
+  color: maroon;
+}
+
+.green {
+  color: green;
+  font-weight: inherit;
+}
+
 h1 {
   font-weight: 500;
   font-size: 2.6rem;

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed, Suspense } from 'vue';
-import { loadScript } from 'vue-plugin-load-script';
 import QuestionDisplay from './components/QuestionDisplay.vue';
 import QuestionInput from './components/QuestionInput.vue';
 import QuestionCorrect from './components/QuestionCorrect.vue';
@@ -41,15 +40,25 @@ window.addEventListener('hashchange', () => {
 const currentView = computed(() => {
   return routes[currentPath.value.slice(1) || '/'];
 });
-
-loadScript('https://storage.googleapis.com/static.q42.nl/q42.js');
 </script>
 
 <template>
   <header>
     <a href="#/">
-      <button v-if="showConnect" @click="connect">conn</button>
-      <q42 width="125" height="125" />
+      <button v-if="showConnect" @click="connect">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#000000"
+          viewBox="0 0 24 24"
+          width="16px"
+          height="16px"
+        >
+          <path
+            d="M 12 0 L 8 4 L 12 8 L 12 5 C 15.859 5 19 8.14 19 12 C 19 12.88 18.82925 13.720094 18.53125 14.496094 L 20.046875 16.009766 C 20.651875 14.800766 21 13.442 21 12 C 21 7.038 16.963 3 12 3 L 12 0 z M 3.953125 7.9902344 C 3.348125 9.1992344 3 10.558 3 12 C 3 16.962 7.037 21 12 21 L 12 24 L 16 20 L 12 16 L 12 19 C 8.141 19 5 15.86 5 12 C 5 11.12 5.17075 10.279906 5.46875 9.5039062 L 3.953125 7.9902344 z"
+          />
+        </svg>
+        <div>Refresh</div>
+      </button>
     </a>
 
     <div class="wrapper"></div>
@@ -69,27 +78,84 @@ loadScript('https://storage.googleapis.com/static.q42.nl/q42.js');
 @import './assets/base.css';
 
 #app {
-  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
 }
 
 header {
   line-height: 1.5;
+  text-align: right;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.biggy {
+  color: maroon;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+header button {
+  display: flex;
+  justify-content: center;
+  float: right;
+}
+
+header button svg {
+  margin-right: 5px;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+}
+
+button {
+  font-family: 'VariableMontserrat';
+  text-transform: uppercase;
+  outline: none !important;
+  border: none !important;
+  border-radius: 20px;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+footer button {
+  word-break: normal;
+  font-size: 2rem;
+  width: 48%;
+  height: 90px;
+}
+
+footer .default-button {
+  color: white;
+  background-color: maroon;
+}
+
+footer .red-button {
+  color: white;
+  background-color: blue;
+}
+
+footer .blue-button {
+  color: white;
+  background-color: red;
 }
 
 @media (hover: hover) {

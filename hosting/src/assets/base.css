@@ -23,7 +23,7 @@
 
 /* semantic color variables for this project */
 :root {
-  --color-background: var(--vt-c-white);
+  --color-background: linen;
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
 
@@ -50,6 +50,11 @@
   }
 }
 
+@font-face {
+  font-family: 'VariableMontserrat';
+  src: url('/src/assets/Montserrat/Montserrat-VariableFont_wght.ttf') format('TrueType');
+}
+
 *,
 *::before,
 *::after {
@@ -59,13 +64,18 @@
   font-weight: normal;
 }
 
+html {
+  height: 100%;
+
+}
 body {
-  min-height: 100vh;
+  min-height: 100%;
+  width: 100%;
   color: var(--color-text);
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+  font-family: 'VariableMontserrat', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
