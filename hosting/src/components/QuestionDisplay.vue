@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { stringToBool } from '@/helpers';
+import { Sleep, stringToBool } from '@/helpers';
 import { getQuestions } from '@/services/databaseService';
 import { serialHandler } from '@/services/serialHandler';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
@@ -26,9 +26,11 @@ const interval = setInterval(async function () {
   console.log('Reloaded questions');
 }, reloadInterval);
 
+let running = false;
 async function handleSerial() {
+  running = true;
   // eslint-disable-next-line no-constant-condition
-  while (true) {
+  while (running) {
     try {
       const text = await serialHandler.read();
       if (text === 'l') {
@@ -39,25 +41,23 @@ async function handleSerial() {
     } catch (err) {
       // Do nothing
     }
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    await Sleep(250);
   }
 }
 
 onMounted(() => {
   handleSerial();
-  
 });
 
 onBeforeUnmount(() => {
+  running = false;
   clearInterval(interval);
 });
 </script>
 
 <template>
   <div class="main">
-    <div class="biggy">
-      Question: {{ vraag.question_eng }} <br />
-    </div>
+    <div class="biggy">Question: {{ vraag.question_eng }} <br /></div>
     <footer>
       <button @click="correct(randomBool)" class="red-button">
         {{ randomBool ? vraag.correct_eng : vraag.incorrect_eng }}

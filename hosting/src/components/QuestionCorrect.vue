@@ -1,5 +1,7 @@
-<script setup lang="ts">import { serialHandler } from '@/services/serialHandler';
-
+<script setup lang="ts">
+import { Sleep } from '@/helpers';
+import { serialHandler } from '@/services/serialHandler';
+import { onMounted, onBeforeUnmount } from 'vue';
 
 async function newQuestion(leaveQuestion: boolean) {
   if (leaveQuestion) {
@@ -9,9 +11,11 @@ async function newQuestion(leaveQuestion: boolean) {
   }
 }
 
+let running = false;
 async function handleSerial() {
+  running = true;
   // eslint-disable-next-line no-constant-condition
-  while (true) {
+  while (running) {
     try {
       const text = await serialHandler.read();
       if (text === 'l') {
@@ -22,10 +26,17 @@ async function handleSerial() {
     } catch (err) {
       // Do nothing
     }
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    await Sleep(250);
   }
 }
 
+onMounted(() => {
+  handleSerial();
+});
+
+onBeforeUnmount(() => {
+  running = false;
+});
 </script>
 
 <template>
@@ -34,8 +45,8 @@ async function handleSerial() {
     Do you want to leave a new question for the next one?<br />
   </div>
   <footer>
-    <button @click="newQuestion(true)" class="default-button">Yes</button>
-    <button @click="newQuestion(false)" class="other-button">No</button>
+    <button @click="newQuestion(true)" class="red-button">Yes</button>
+    <button @click="newQuestion(false)" class="blue-button">No</button>
   </footer>
 </template>
 

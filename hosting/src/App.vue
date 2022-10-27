@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, Suspense, type ComponentPublicInstance } from 'vue';
-import { loadScript } from 'vue-plugin-load-script';
+import { ref, computed, Suspense } from 'vue';
 import QuestionDisplay from './components/QuestionDisplay.vue';
 import QuestionInput from './components/QuestionInput.vue';
 import QuestionCorrect from './components/QuestionCorrect.vue';
@@ -16,27 +15,20 @@ const routes: { [route: string]: any } = {
 
 const showConnect = ref(true);
 
-async function handleSerial() {
-  let errors = 0;
+async function checkSerialActive() {
   // eslint-disable-next-line no-constant-condition
-  while (true) {
-    try {
-      await serialHandler.read();
-      showConnect.value = false;
-      errors = 0;
-    } catch (err) {
-      errors++;
-      if (errors > 10) {
-        showConnect.value = true;
-      }
-    }
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  }
+  showConnect.value = false;
+  // Wait 10 sec for the connection to exist
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  // Active resolves when the connection is closed.
+  await serialHandler.active();
+  console.log('Serial closed');
+  showConnect.value = true;
 }
 
 function connect() {
   serialHandler.init();
-  handleSerial();
+  checkSerialActive();
 }
 
 const currentPath = ref(window.location.hash);
@@ -48,17 +40,13 @@ window.addEventListener('hashchange', () => {
 const currentView = computed(() => {
   return routes[currentPath.value.slice(1) || '/'];
 });
-
 </script>
 
 <template>
   <header>
-    <a href="#/">
-      <button v-if="showConnect" @click="connect">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 24 24" width="16px" height="16px">    <path d="M 12 0 L 8 4 L 12 8 L 12 5 C 15.859 5 19 8.14 19 12 C 19 12.88 18.82925 13.720094 18.53125 14.496094 L 20.046875 16.009766 C 20.651875 14.800766 21 13.442 21 12 C 21 7.038 16.963 3 12 3 L 12 0 z M 3.953125 7.9902344 C 3.348125 9.1992344 3 10.558 3 12 C 3 16.962 7.037 21 12 21 L 12 24 L 16 20 L 12 16 L 12 19 C 8.141 19 5 15.86 5 12 C 5 11.12 5.17075 10.279906 5.46875 9.5039062 L 3.953125 7.9902344 z"/></svg>
-        <div>Refresh</div>
-      </button>
-    </a>
+    <button v-if="showConnect" @click="connect">
+      <div>Connect</div>
+    </button>
 
     <div class="wrapper"></div>
   </header>
@@ -119,7 +107,6 @@ main {
   justify-content: space-between;
   flex-direction: column;
   height: 100%;
-
 }
 
 button {
