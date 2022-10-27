@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 
 let timeoutSeconds = 5;
 const timeout = ref(timeoutSeconds);
@@ -14,6 +14,9 @@ const interval = setInterval(function () {
     timeout.value = timeoutSeconds;
   }
 }, 1000);
+onBeforeUnmount(() => {
+  clearInterval(interval);
+});
 </script>
 
 <template>

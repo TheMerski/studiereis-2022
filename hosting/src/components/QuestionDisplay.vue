@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { stringToBool } from '@/helpers';
 import { getQuestions } from '@/services/databaseService';
+import { onBeforeUnmount, ref } from 'vue';
 
 const vragen = await getQuestions();
-const vraag = vragen[0];
-const randomBool = stringToBool(vraag.id);
+const reloadInterval = 10 * 1000;
+const vraag = ref(vragen[0]);
+const randomBool = ref(stringToBool(vraag.value.id));
 
 async function correct(correct: boolean) {
   if (correct) {
@@ -13,6 +15,20 @@ async function correct(correct: boolean) {
     window.location.href = '#/incorrect';
   }
 }
+
+const interval = setInterval(async function () {
+  const latestQuestions = await getQuestions();
+  if (latestQuestions[0].id !== vraag.value.id) {
+    vraag.value = latestQuestions[0];
+    randomBool.value = stringToBool(vraag.value.id);
+  }
+  console.log('Reloaded questions');
+}, reloadInterval);
+
+onBeforeUnmount(() => {
+  clearInterval(interval);
+});
+
 </script>
 
 <template>
