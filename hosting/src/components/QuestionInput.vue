@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Sleep } from '@/helpers';
 import { createQuestion } from '@/services/databaseService';
-import { ref } from 'vue';
+import { serialHandler } from '@/services/serialHandler';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 const text = ref('');
 const correct = ref('');
 const incorrect = ref('');
@@ -14,6 +15,33 @@ async function send() {
   await Sleep(250);
   window.location.href = '#/';
 }
+
+let running = false;
+async function handleSerial() {
+  running = true;
+  // eslint-disable-next-line no-constant-condition
+  while (running) {
+    try {
+      const serialText = await serialHandler.read();
+      if (serialText === 'l') {
+        if (text.value !== '' && correct.value !== '' && incorrect.value !== '') {
+          send();
+        }
+      }
+    } catch (err) {
+      // Do nothing
+    }
+    await Sleep(250);
+  }
+}
+
+onMounted(() => {
+  handleSerial();
+});
+
+onBeforeUnmount(() => {
+  running = false;
+});
 </script>
 
 <template>
@@ -116,6 +144,7 @@ async function send() {
 
 .formgroup input {
   margin-left: 10px;
+  font-size: 20px;
   flex: 1;
 }
 
