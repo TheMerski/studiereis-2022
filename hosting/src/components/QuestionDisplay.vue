@@ -1,18 +1,30 @@
 <script setup lang="ts">
+import { stringToBool } from '@/helpers';
 import { getQuestions } from '@/services/databaseService';
 
 const vragen = await getQuestions();
-console.log(vragen);
+const vraag = vragen[0];
+const randomBool = stringToBool(vraag.id);
+
+async function correct(correct: boolean) {
+  if (correct) {
+    window.location.href = '#/correct';
+  } else {
+    window.location.href = '#/incorrect';
+  }
+}
 </script>
 
 <template>
-  <div v-for="vraag in vragen" :key="vraag.id">
-    <p>
-      Vraag: {{ vraag.question_eng }} <br />
-      Correct antw: {{ vraag.correct_eng }} <br />
-      Fout antw: {{ vraag.incorrect_eng }} <br />
-    </p>
-  </div>
+  <p>
+    Question: {{ vraag.question_eng }} <br />
+    <button @click="correct(randomBool)">
+      {{ randomBool ? vraag.correct_eng : vraag.incorrect_eng }}
+    </button>
+    <button @click="correct(!randomBool)">
+      {{ randomBool ? vraag.incorrect_eng : vraag.correct_eng }}
+    </button>
+  </p>
 </template>
 
 <style scoped>

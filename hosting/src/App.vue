@@ -1,22 +1,43 @@
 <script setup lang="ts">
+import { ref, computed, Suspense } from 'vue';
 import { loadScript } from 'vue-plugin-load-script';
 import QuestionDisplay from './components/QuestionDisplay.vue';
 import QuestionInput from './components/QuestionInput.vue';
+import QuestionCorrect from './components/QuestionCorrect.vue';
+import QuestionIncorrect from './components/QuestionIncorrect.vue';
+
+const routes = {
+  '/': QuestionDisplay,
+  '/add-question': QuestionInput,
+  '/correct': QuestionCorrect,
+  '/incorrect': QuestionIncorrect,
+};
+
+const currentPath = ref(window.location.hash);
+
+window.addEventListener('hashchange', () => {
+  currentPath.value = window.location.hash;
+});
+
+const currentView = computed(() => {
+  return routes[currentPath.value.slice(1) || '/'];
+});
 
 loadScript('https://storage.googleapis.com/static.q42.nl/q42.js');
 </script>
 
 <template>
   <header>
-    <q42 width="125" height="125" />
+    <a href="#/">
+      <q42 width="125" height="125" />
+    </a>
 
     <div class="wrapper"></div>
   </header>
   <main>
-    <QuestionInput />
     <Suspense>
       <!-- component with nested async dependencies -->
-      <QuestionDisplay />
+      <component :is="currentView" />
 
       <!-- loading state via #fallback slot -->
       <template #fallback> Loading... </template>

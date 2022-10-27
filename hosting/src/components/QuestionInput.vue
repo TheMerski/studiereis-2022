@@ -2,19 +2,24 @@
 import { createQuestion } from '@/services/databaseService';
 import { ref } from 'vue';
 const text = ref('');
+const correct = ref('');
+const incorrect = ref('');
 
 async function send() {
   // Get the sequence for the input.
-  createQuestion(text.value);
+  createQuestion(text.value, correct.value, incorrect.value);
+  window.location.href = '#/';
 }
 </script>
 
 <template>
   <div class="greetings">
     <h3>
-      Vragen enzo:<br />
-      <input type="text" placeholder="Vraag" maxlength="420" v-model="text" />
-      <button @click="send">Send!</button>
+      Leave a question for the next person:<br />
+      <input type="text" placeholder="Question" maxlength="420" v-model="text" /><br />
+      <input type="text" placeholder="Correct answer" maxlength="420" v-model="correct" /><br />
+      <input type="text" placeholder="Incorrect answer" maxlength="420" v-model="incorrect" /><br />
+      <button @click="send">Save!</button>
     </h3>
   </div>
 </template>

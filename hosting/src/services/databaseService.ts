@@ -43,8 +43,8 @@ export async function getQuestions(approved = true, amount = 1): Promise<Questio
 
 export async function createQuestion(
   question: string,
-  correct = 'True',
-  incorrect = 'False'
+  correct = 'Correct',
+  incorrect = 'Incorrect'
 ): Promise<void> {
   try {
     const newQuestion = new Question(
