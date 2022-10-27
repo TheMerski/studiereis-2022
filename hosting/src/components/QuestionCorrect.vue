@@ -45,8 +45,8 @@ onBeforeUnmount(() => {
     Do you want to leave a new question for the next one?<br />
   </div>
   <footer>
-    <button @click="newQuestion(true)" class="red-button">Yes</button>
-    <button @click="newQuestion(false)" class="blue-button">No</button>
+    <button @click="newQuestion(true)" class="blue-button">Yes</button>
+    <button @click="newQuestion(false)" class="red-button">No</button>
   </footer>
 </template>
 

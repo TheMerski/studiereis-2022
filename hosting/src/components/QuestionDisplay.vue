@@ -57,12 +57,15 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="main">
-    <div class="biggy">Question: {{ vraag.question_eng }} <br /></div>
+    <p class="biggy">Question:</p>
+    <p class="biggy">
+      {{ vraag.question_eng }}
+    </p>
     <footer>
-      <button @click="correct(randomBool)" class="red-button">
+      <button @click="correct(randomBool)" class="blue-button">
         {{ randomBool ? vraag.correct_eng : vraag.incorrect_eng }}
       </button>
-      <button @click="correct(!randomBool)" class="blue-button">
+      <button @click="correct(!randomBool)" class="red-button">
         {{ randomBool ? vraag.incorrect_eng : vraag.correct_eng }}
       </button>
     </footer>

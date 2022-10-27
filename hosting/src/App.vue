@@ -44,7 +44,7 @@ const currentView = computed(() => {
 
 <template>
   <header>
-    <button v-if="showConnect" @click="connect">
+    <button v-if="showConnect" @click="connect" class="connect">
       <div>Connect</div>
     </button>
 
@@ -99,12 +99,10 @@ main {
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .main {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
   height: 100%;
 }
@@ -121,9 +119,12 @@ footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
 }
 
-footer button {
+button:not(.connect) {
   word-break: normal;
   font-size: 2rem;
   width: 48%;
@@ -135,14 +136,19 @@ footer .default-button {
   background-color: maroon;
 }
 
-footer .red-button {
+.red-button {
+  color: white;
+  background-color: red;
+}
+
+.blue-button {
   color: white;
   background-color: blue;
 }
 
-footer .blue-button {
+.light-blue-button {
   color: white;
-  background-color: red;
+  background-color: rgb(127, 168, 251);
 }
 
 @media (hover: hover) {

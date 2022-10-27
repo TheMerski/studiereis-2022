@@ -94,7 +94,7 @@ async function send() {
       />
     </div>
     <br />
-    <button type="submit" value="Save!" class="default-button">Save!</button>
+    <button type="submit" value="Save!" class="light-blue-button">Save!</button>
   </form>
   <div v-if="submitted">
     <h3>Thanks for submitting your question!</h3>
