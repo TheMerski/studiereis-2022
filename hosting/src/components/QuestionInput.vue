@@ -13,37 +13,26 @@ async function send() {
 </script>
 
 <template>
-  <div class="greetings">
-    <h3>
-      Leave a question for the next person:<br />
+  <div class="biggy">
+    Leave a question for the next person
+  </div>
+  <footer class="vertical-footer">
       <input type="text" placeholder="Question" maxlength="420" v-model="text" /><br />
       <input type="text" placeholder="Correct answer" maxlength="420" v-model="correct" /><br />
       <input type="text" placeholder="Incorrect answer" maxlength="420" v-model="incorrect" /><br />
-      <button @click="send">Save!</button>
-    </h3>
-  </div>
+      <button @click="send" class="default-button">Save!</button>
+  </footer>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
+.vertical-footer {
+  display: flex;
+  flex-direction: column;
 }
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+input {
+  padding: 20px;
+  border-radius: 10px;
+  border: none !important;
+  outline: none !important;
 }
 </style>

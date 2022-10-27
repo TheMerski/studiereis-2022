@@ -45,6 +45,7 @@ async function handleSerial() {
 
 onMounted(() => {
   handleSerial();
+  
 });
 
 onBeforeUnmount(() => {
@@ -53,15 +54,19 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <p>
-    Question: {{ vraag.question_eng }} <br />
-    <button @click="correct(randomBool)">
-      {{ randomBool ? vraag.correct_eng : vraag.incorrect_eng }}
-    </button>
-    <button @click="correct(!randomBool)">
-      {{ randomBool ? vraag.incorrect_eng : vraag.correct_eng }}
-    </button>
-  </p>
+  <div class="main">
+    <div class="biggy">
+      Question: {{ vraag.question_eng }} <br />
+    </div>
+    <footer>
+      <button @click="correct(randomBool)" class="red-button">
+        {{ randomBool ? vraag.correct_eng : vraag.incorrect_eng }}
+      </button>
+      <button @click="correct(!randomBool)" class="blue-button">
+        {{ randomBool ? vraag.incorrect_eng : vraag.correct_eng }}
+      </button>
+    </footer>
+  </div>
 </template>
 
 <style scoped>
