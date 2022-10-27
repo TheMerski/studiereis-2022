@@ -12,7 +12,7 @@ async function send() {
   // Get the sequence for the input.
   submitted.value = true;
   await createQuestion(text.value, correct.value, incorrect.value);
-  await Sleep(250);
+  await Sleep(500);
   window.location.href = '#/';
 }
 
@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
           />
         </g>
       </svg>
-      <input type="text" placeholder="Question" maxlength="420" v-model="text" required /><br />
+      <input type="text" placeholder="Question" maxlength="150" v-model="text" required /><br />
     </div>
     <br />
     <div class="formgroup">
@@ -91,7 +91,7 @@ onBeforeUnmount(() => {
           d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z"
         />
       </svg>
-      <input type="text" placeholder="Correct answer" maxlength="420" v-model="correct" required />
+      <input type="text" placeholder="Correct answer" maxlength="42" v-model="correct" required />
     </div>
     <br />
     <div class="formgroup">
@@ -120,7 +120,7 @@ onBeforeUnmount(() => {
       <input
         type="text"
         placeholder="Incorrect answer"
-        maxlength="420"
+        maxlength="42"
         required
         v-model="incorrect"
       />

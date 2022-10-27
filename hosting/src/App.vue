@@ -126,7 +126,7 @@ footer {
 
 button:not(.connect) {
   word-break: normal;
-  font-size: 2rem;
+  font-size: 1.5rem;
   width: 48%;
   height: 90px;
 }
