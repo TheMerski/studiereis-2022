@@ -131,7 +131,7 @@ onBeforeUnmount(() => {
     </button>
   </form>
   <div v-if="submitted">
-    <h3>Thanks for submitting your question!</h3>
+    <h3 class="biggy">Thanks for submitting your question!</h3>
   </div>
 </template>
 
