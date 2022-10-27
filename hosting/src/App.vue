@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, Suspense, type ComponentPublicInstance } from 'vue';
+import { ref, computed, Suspense } from 'vue';
 import { loadScript } from 'vue-plugin-load-script';
 import QuestionDisplay from './components/QuestionDisplay.vue';
 import QuestionInput from './components/QuestionInput.vue';
@@ -16,27 +16,20 @@ const routes: { [route: string]: any } = {
 
 const showConnect = ref(true);
 
-async function handleSerial() {
-  let errors = 0;
+async function checkSerialActive() {
   // eslint-disable-next-line no-constant-condition
-  while (true) {
-    try {
-      await serialHandler.read();
-      showConnect.value = false;
-      errors = 0;
-    } catch (err) {
-      errors++;
-      if (errors > 10) {
-        showConnect.value = true;
-      }
-    }
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  }
+  showConnect.value = false;
+  // Wait 10 sec for the connection to exist
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  // Active resolves when the connection is closed.
+  await serialHandler.active();
+  console.log('Serial closed');
+  showConnect.value = true;
 }
 
 function connect() {
   serialHandler.init();
-  handleSerial();
+  checkSerialActive();
 }
 
 const currentPath = ref(window.location.hash);

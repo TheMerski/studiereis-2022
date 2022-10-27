@@ -58,6 +58,10 @@ class SerialHandler {
       throw err;
     }
   }
+
+  async active(): Promise<undefined> {
+    return this.reader?.closed;
+  }
 }
 
 export const serialHandler = new SerialHandler();

@@ -26,9 +26,11 @@ const interval = setInterval(async function () {
   console.log('Reloaded questions');
 }, reloadInterval);
 
+let running = false;
 async function handleSerial() {
+  running = true;
   // eslint-disable-next-line no-constant-condition
-  while (true) {
+  while (running) {
     try {
       const text = await serialHandler.read();
       if (text === 'l') {
@@ -48,6 +50,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  running = false;
   clearInterval(interval);
 });
 </script>

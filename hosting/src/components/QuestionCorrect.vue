@@ -1,5 +1,6 @@
-<script setup lang="ts">import { serialHandler } from '@/services/serialHandler';
-
+<script setup lang="ts">
+import { serialHandler } from '@/services/serialHandler';
+import { onMounted, onBeforeUnmount } from 'vue';
 
 async function newQuestion(leaveQuestion: boolean) {
   if (leaveQuestion) {
@@ -9,9 +10,11 @@ async function newQuestion(leaveQuestion: boolean) {
   }
 }
 
+let running = false;
 async function handleSerial() {
+  running = true;
   // eslint-disable-next-line no-constant-condition
-  while (true) {
+  while (running) {
     try {
       const text = await serialHandler.read();
       if (text === 'l') {
@@ -26,6 +29,13 @@ async function handleSerial() {
   }
 }
 
+onMounted(() => {
+  handleSerial();
+});
+
+onBeforeUnmount(() => {
+  running = false;
+});
 </script>
 
 <template>
