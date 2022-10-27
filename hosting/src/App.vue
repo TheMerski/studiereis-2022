@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, Suspense } from 'vue';
+import { ref, computed, Suspense, type ComponentPublicInstance } from 'vue';
 import { loadScript } from 'vue-plugin-load-script';
 import QuestionDisplay from './components/QuestionDisplay.vue';
 import QuestionInput from './components/QuestionInput.vue';
 import QuestionCorrect from './components/QuestionCorrect.vue';
 import QuestionIncorrect from './components/QuestionIncorrect.vue';
 
-const routes = {
+const routes: { [route: string]: any } = {
   '/': QuestionDisplay,
   '/add-question': QuestionInput,
   '/correct': QuestionCorrect,
