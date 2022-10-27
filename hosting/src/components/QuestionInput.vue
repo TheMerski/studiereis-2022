@@ -16,6 +16,10 @@ async function send() {
   window.location.href = '#/';
 }
 
+function formFilled(): boolean {
+  return text.value !== '' && correct.value !== '' && incorrect.value !== '';
+}
+
 let running = false;
 async function handleSerial() {
   running = true;
@@ -24,7 +28,7 @@ async function handleSerial() {
     try {
       const serialText = await serialHandler.read();
       if (serialText === 'l') {
-        if (text.value !== '' && correct.value !== '' && incorrect.value !== '') {
+        if (formFilled()) {
           send();
         }
       }
@@ -122,7 +126,9 @@ onBeforeUnmount(() => {
       />
     </div>
     <br />
-    <button type="submit" value="Save!" class="light-blue-button">Save!</button>
+    <button type="submit" value="Save!" class="light-blue-button" :disabled="!formFilled()">
+      Save!
+    </button>
   </form>
   <div v-if="submitted">
     <h3>Thanks for submitting your question!</h3>
