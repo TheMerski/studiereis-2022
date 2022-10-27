@@ -37,9 +37,15 @@ onMounted(() => {
 onBeforeUnmount(() => {
   running = false;
 });
+
+setTimeout(function () {
+  document.getElementById('confetti')?.classList.add('hidden');
+}, 2600);
+
 </script>
 
 <template>
+  <img id="confetti" src="../assets/gif_5.gif" class= />
   <div class="biggy">
     <span class="green">Correct!</span><br />
     Do you want to leave a new question for the next one?<br />
@@ -55,6 +61,17 @@ footer .other-button {
   color: maroon;
 }
 
+img {
+  position: absolute;
+  height: 800px;
+  width: 800px;
+  left: 0;
+  top: 20%;
+  z-index: 1;
+}
+img.hidden {
+  display: none;
+}
 .green {
   color: green;
   font-weight: inherit;
@@ -68,17 +85,5 @@ h1 {
 
 h3 {
   font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
 }
 </style>
