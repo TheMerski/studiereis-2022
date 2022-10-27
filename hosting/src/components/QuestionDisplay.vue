@@ -47,7 +47,6 @@ async function handleSerial() {
 
 onMounted(() => {
   handleSerial();
-  
 });
 
 onBeforeUnmount(() => {
@@ -58,9 +57,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="main">
-    <div class="biggy">
-      Question: {{ vraag.question_eng }} <br />
-    </div>
+    <div class="biggy">Question: {{ vraag.question_eng }} <br /></div>
     <footer>
       <button @click="correct(randomBool)" class="red-button">
         {{ randomBool ? vraag.correct_eng : vraag.incorrect_eng }}

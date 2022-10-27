@@ -20,9 +20,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="biggy">
-    Sorry, that's <span class="red">incorrect</span>.<br />
-  </div>
+  <div class="biggy">Sorry, that's <span class="red">incorrect</span>.<br /></div>
 </template>
 
 <style scoped>
