@@ -1,19 +1,23 @@
 <script setup lang="ts">
+import { Sleep } from '@/helpers';
 import { createQuestion } from '@/services/databaseService';
 import { ref } from 'vue';
 const text = ref('');
 const correct = ref('');
 const incorrect = ref('');
+const submitted = ref(false);
 
 async function send() {
   // Get the sequence for the input.
-  createQuestion(text.value, correct.value, incorrect.value);
+  submitted.value = true;
+  await createQuestion(text.value, correct.value, incorrect.value);
+  await Sleep(500);
   window.location.href = '#/';
 }
 </script>
 
 <template>
-  <div class="greetings">
+  <div class="question" v-if="!submitted">
     <h3>
       Leave a question for the next person:<br />
       <input type="text" placeholder="Question" maxlength="420" v-model="text" /><br />
@@ -21,6 +25,9 @@ async function send() {
       <input type="text" placeholder="Incorrect answer" maxlength="420" v-model="incorrect" /><br />
       <button @click="send">Save!</button>
     </h3>
+  </div>
+  <div v-if="submitted">
+    <h3>Thanks for submitting your question!</h3>
   </div>
 </template>
 

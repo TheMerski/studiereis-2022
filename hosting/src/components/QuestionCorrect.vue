@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Sleep } from '@/helpers';
 import { serialHandler } from '@/services/serialHandler';
 import { onMounted, onBeforeUnmount } from 'vue';
 
@@ -25,7 +26,7 @@ async function handleSerial() {
     } catch (err) {
       // Do nothing
     }
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    await Sleep(250);
   }
 }
 
