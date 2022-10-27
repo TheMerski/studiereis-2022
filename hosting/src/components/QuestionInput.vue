@@ -65,7 +65,7 @@ async function send() {
 }
 
 button {
-  height: 65px;
+  height: 56px;
 }
 
 input {
