@@ -16,6 +16,10 @@ async function send() {
   window.location.href = '#/';
 }
 
+function cancel() {
+  window.location.href = '#/';
+}
+
 function formFilled(): boolean {
   return text.value !== '' && correct.value !== '' && incorrect.value !== '';
 }
@@ -31,6 +35,8 @@ async function handleSerial() {
         if (formFilled()) {
           send();
         }
+      } else if (serialText === 'r') {
+        cancel();
       }
     } catch (err) {
       // Do nothing
@@ -140,9 +146,14 @@ onBeforeUnmount(() => {
       />
     </div>
     <br />
-    <button type="submit" value="Save!" class="light-blue-button" :disabled="!formFilled()">
-      Save!
-    </button>
+    <div class="center-btn">
+
+      <button type="submit" value="Save!" class="light-blue-button" :disabled="!formFilled()">
+          Save!
+      </button>
+      <button @click="cancel" class="red-button">Cancel</button>
+    </div>
+
   </form>
   <div v-if="submitted">
     <h3 class="biggy">Thanks for submitting your question!</h3>
@@ -150,6 +161,17 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+
+.center-btn{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.center-btn button{
+  width: 48% !important;
+  margin: 1%;
+}
 .form-group {
   display: flex;
   width: 100%;
