@@ -4,14 +4,13 @@ import {
   getFirestore,
   collection,
   getDocs,
-  setDoc,
-  doc,
   addDoc,
   query,
   where,
   limit,
   orderBy,
-} from 'firebase/firestore/lite';
+  enableIndexedDbPersistence,
+} from 'firebase/firestore';
 import { Question, questionConvertor } from './question';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -22,6 +21,19 @@ const db = getFirestore(app);
 
 const latestQuestionVersion = 1;
 const questionCollectionName = 'questions';
+
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code == 'failed-precondition') {
+    // Multiple tabs open, persistence can only be enabled
+    // in one tab at a a time.
+    console.log('Multiple tabs open, not using offline mode');
+  } else if (err.code == 'unimplemented') {
+    // The current browser does not support all of the
+    // features required to enable persistence
+    // ...
+    console.log('Browser does not support offline mode');
+  }
+});
 
 export async function getQuestions(approved = true, amount = 1): Promise<Question[]> {
   try {
