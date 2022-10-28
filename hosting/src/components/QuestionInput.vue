@@ -51,7 +51,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="biggy" v-if="!submitted">Leave a question for the next person</div>
   <form class="vertical-footer" v-if="!submitted" @submit.prevent="send">
-    <div class="formgroup">
+    <div class="form-group">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
       /><br />
     </div>
     <br />
-    <div class="formgroup">
+    <div class="form-group">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px">
         <path
           fill="#c8e6c9"
@@ -101,7 +101,7 @@ onBeforeUnmount(() => {
       <input type="text" placeholder="Correct answer" maxlength="42" v-model="correct" required />
     </div>
     <br />
-    <div class="formgroup">
+    <div class="form-group">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         x="0px"
@@ -143,7 +143,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.formgroup {
+.form-group {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -155,7 +155,7 @@ onBeforeUnmount(() => {
   margin-right: 4px;
 }
 
-.formgroup input {
+.form-group input {
   margin-left: 10px;
   font-size: 20px;
   flex: 1;
