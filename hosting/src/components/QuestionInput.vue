@@ -77,7 +77,14 @@ onBeforeUnmount(() => {
           />
         </g>
       </svg>
-      <input type="text" placeholder="Question" maxlength="150" v-model="text" required /><br />
+      <input
+        type="text"
+        placeholder="Question"
+        maxlength="150"
+        v-model="text"
+        required
+        autofocus
+      /><br />
     </div>
     <br />
     <div class="formgroup">
