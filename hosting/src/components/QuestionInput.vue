@@ -11,8 +11,8 @@ const submitted = ref(false);
 async function send() {
   // Get the sequence for the input.
   submitted.value = true;
-  await createQuestion(text.value, correct.value, incorrect.value);
-  await Sleep(500);
+  createQuestion(text.value, correct.value, incorrect.value);
+  await Sleep(750);
   window.location.href = '#/';
 }
 
