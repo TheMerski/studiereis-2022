@@ -45,7 +45,7 @@ setTimeout(function () {
 </script>
 
 <template>
-  <img id="confetti" src="../assets/gif_5.gif" />
+  <img id="confetti" src="../../public/gif_5.gif" />
   <div class="biggy">
     <span class="green">Correct!</span><br />
     Do you want to leave a new question for the next one?<br />
