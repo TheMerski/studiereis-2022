@@ -39,6 +39,12 @@ async function handleSerial() {
   }
 }
 
+// Autofocus on input field.
+const vFocus = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mounted: (el: any) => el.focus(),
+};
+
 onMounted(() => {
   handleSerial();
 });
@@ -84,6 +90,7 @@ onBeforeUnmount(() => {
         v-model="text"
         required
         autofocus
+        v-focus
       /><br />
     </div>
     <br />
